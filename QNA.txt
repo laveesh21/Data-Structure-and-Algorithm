@@ -1,0 +1,10 @@
+Q1. Virtual funtion
+    Implemets dynamic dispatch
+
+Q2. V-Table
+    Contain mapping of all virtual funtion in our base class.
+    To use is we simply write a virtual keyword in front of funtion
+    which tells that if the funtion is overridden then it shoud point to the 
+    correct funtion.
+
+Q.3
