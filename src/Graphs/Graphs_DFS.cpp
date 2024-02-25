@@ -4,7 +4,9 @@
 class Graph
 {
 private:
-    void dfs(int node, std::vector<int> &vis, std::vector<int> &ls, std::vector<std::vector<int>> &adj)
+    std::vector<std::vector<int>> adj;
+
+    void dfs(int node, std::vector<int> &vis, std::vector<int> &ls)
     {
         vis[node] = 1;
         ls.push_back(node);
@@ -12,39 +14,37 @@ private:
         {
             if (!vis[it])
             {
-                dfs(it, vis, ls, adj);
+                dfs(it, vis, ls);
             }
         }
     }
 
 public:
-    std::vector<std::vector<int>> initGraph(int n, int m)
+    Graph()
     {
-
-        std::vector<std::vector<int>> adj(n + 1);
+        int n, m;
+        std::cout << "Enter the number of nodes and edges: ";
+        std::cin >> n >> m;
+        adj.resize(n + 1);
         std::cout << "Enter the edges (format: u v):" << std::endl;
-
         for (int i = 1; i <= m; i++)
         {
             int u, v;
-
             std::cin >> u >> v;
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-
-        return adj;
     }
 
-    std::vector<int> dfsOfGraph(int V, std::vector<std::vector<int>> &adj, int start)
+    std::vector<int> dfsOfGraph(int start)
     {
-        std::vector<int> vis(V);
+        std::vector<int> vis(adj.size());
         std::vector<int> ls;
-        dfs(start, vis, ls, adj);
+        dfs(start, vis, ls);
         return ls;
     }
 
-    void printGraph(std::vector<std::vector<int>> &adj)
+    void printGraph()
     {
         for (int i = 1; i < adj.size(); ++i)
         {
@@ -57,7 +57,7 @@ public:
         }
     }
 
-    void printList(std::vector<int> &ls)
+    void printList(const std::vector<int> &ls)
     {
         std::cout << "DFS traversal list: ";
         for (int i = 0; i < ls.size(); ++i)
@@ -70,14 +70,19 @@ public:
 
 int main()
 {
-    int n, m;
-    std::cout << "Enter the number of nodes and edges: ";
-    std::cin >> n >> m;
     Graph obj;
-    std::vector<std::vector<int>> adj = obj.initGraph(n, m);
-    std::vector<int> ls = obj.dfsOfGraph(n, adj, 3);
-    obj.printGraph(adj);
+    std::vector<int> ls = obj.dfsOfGraph(1); // Starting DFS from node 3
+    obj.printGraph();
     obj.printList(ls);
 
     return 0;
 }
+
+
+// First initialise a VISTED_LIST and DFS_LIST
+// Call a recursive DFS funtion by passing Staring_Node
+// Upate VISITED_LIST = 1  &&  push that node in DFS_LIST
+// For every neighbout of that node run for each loop
+// If not visited , Enter the recursion funtion inside that unvisited node for deep interation
+
+// NOTE : PASS BY REFERENCE shall be used 
